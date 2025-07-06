@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Couple App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Scaffold(
-        body: Center(child: Text('Couple App')),
-      ),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
+      home: const LoginPage(),
     );
   }
 }

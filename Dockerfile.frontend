@@ -1,0 +1,7 @@
+FROM cirrusci/flutter:latest
+WORKDIR /app
+COPY frontend /app
+COPY frontend/scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["flutter", "run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "0.0.0.0"]

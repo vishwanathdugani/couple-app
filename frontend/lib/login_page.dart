@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,7 +25,27 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
     if (response.statusCode == 200) {
-      // Handle success, e.g. save token
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
+    }
+  }
+
+  Future<void> _register() async {
+    final response = await http.post(
+      Uri.parse('http://localhost:8000/api/auth/registration/'),
+      body: {
+        'email': _emailController.text,
+        'password1': _passwordController.text,
+        'password2': _passwordController.text,
+      },
+    );
+    if (response.statusCode == 201) {
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
     }
   }
 
@@ -38,7 +59,10 @@ class _LoginPageState extends State<LoginPage> {
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
-      // Handle success
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );
     }
   }
 
@@ -65,6 +89,11 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: _login,
               child: const Text('Login'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: _register,
+              child: const Text('Register'),
             ),
             const SizedBox(height: 16),
             OutlinedButton(
